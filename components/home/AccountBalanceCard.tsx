@@ -4,7 +4,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SvgIcon from "../common/SvgIcon";
 import { IconSvg } from "@/assets/images/svg";
 import { formatDisplayNumber } from "@/utils/formatCurrency";
-
 interface AccountBalanceCardProps {
   accountType: string;
   accountNumber: number | string;
@@ -26,6 +25,7 @@ const AccountBalanceNotFound = () => {
     </View>
   );
 }
+
 
 const AccountBalanceCard: React.FC<AccountBalanceCardProps> = ({
   accountType,

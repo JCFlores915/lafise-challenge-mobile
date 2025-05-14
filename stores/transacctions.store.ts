@@ -40,7 +40,7 @@ export const useTransactionsStore = create<TransactionsStore>((set, get) => ({
     total_count: 0,
     items: [],
   },
-  loading: false,
+  loading: true,
   error: null,
   fetched: false,
   fetchTransactions: async () => {

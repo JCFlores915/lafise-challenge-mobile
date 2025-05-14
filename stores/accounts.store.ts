@@ -23,7 +23,7 @@ export const useAccountStore = create<AccountStore>((set, get) => ({
     balance: 0,
     currency: "",
   },
-  loading: false,
+  loading: true,
   error: null,
   fetched: false,
   fetchAccounts: async () => {

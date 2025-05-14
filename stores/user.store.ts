@@ -26,7 +26,7 @@ export const useUserStore = create<UserStore>((set, get) => ({
     profile_photo: "",
     products: [],
   },
-  loading: false,
+  loading: true,
   error: null,
   fetched: false,
   fetchUser: async () => {

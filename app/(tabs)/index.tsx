@@ -23,6 +23,7 @@ import { QuickOperations } from "@/constants/QuickOperations";
 import { sharedAccountDetails } from "@/utils/SharingAccount";
 import { formatCurrency, formatDisplayNumber } from "@/utils/formatCurrency";
 import NetworkError from "@/components/common/NetworkError";
+import ScreenLoader from "@/components/common/ScreenLoader";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -40,7 +41,7 @@ export default function HomeScreen() {
     error: userError,
     fetchUser,
   } = useUserStore();
-  console.log("error", userError);
+
   const {
     transactions,
     loading: transactionsLoading,
@@ -62,7 +63,14 @@ export default function HomeScreen() {
     fetchTransactions();
   }, []);
 
+  let loading = userLoading || accountsLoading || transactionsLoading;
+
+  if (loading) {
+    return <ScreenLoader />;
+  }
+
   let error = userError || accountsError || transactionsError;
+
   if (error) {
     return (
       <NetworkError
