@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons"; 
 import Icon from "../common/Icon";
+import SvgIcon from "../common/SvgIcon";
+import { IconSvg } from "@/assets/images/svg";
 
 interface ScheduledPaymentProps {
   title: string;
@@ -33,7 +35,10 @@ const ScheduledPayment: React.FC<ScheduledPaymentProps> = ({
     >
       <View className="flex-row items-center">
         <View className="bg-accent/20 p-3 rounded-full mr-3">
-          <Icon name={iconName} family={iconFamily} size={24} color="#006A4E" />
+          <SvgIcon
+            xml={IconSvg.arrow_down}
+           
+          />
         </View>
         <View>
           <Text className="text-text font-semibold">{title}</Text>

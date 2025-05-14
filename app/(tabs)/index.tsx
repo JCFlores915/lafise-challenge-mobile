@@ -1,85 +1,114 @@
-// app/(tabs)/index.tsx
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import { useState } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
-
 import AccountBalanceCard from "../../components/home/AccountBalanceCard";
 import QuickActionItem from "../../components/home/QuickActionItem";
 import ScheduledPayment from "../../components/home/ScheduledPayment";
+import SvgIcon from "@/components/common/SvgIcon";
+import { IconSvg } from "@/assets/images/svg";
 
 export default function HomeScreen() {
   const router = useRouter();
-
+  const [isVisible, setIsVisible] = useState(false);
   return (
-    <SafeAreaView className="flex-1 bg-primary">
+    <View className="flex-1 bg-transparent">
       <ScrollView
         className="flex-1"
         contentContainerStyle={{ paddingBottom: 20 }}
       >
-        <View className="px-5 pt-5 pb-12 bg-primary">
-          <View className="flex-row justify-between items-center mb-8">
-            <View className="flex-row items-center">
-              <MaterialCommunityIcons
-                name="format-list-bulleted-square"
-                size={28}
-                color="white"
+        <ImageBackground
+          source={require("../../assets/images/background.png")}
+          style={{ paddingHorizontal: 20, paddingTop: 20, paddingBottom: 120 }}
+          imageStyle={{ resizeMode: "cover" }}
+        >
+          <View className=" pt-14 pb-12 bg-transparent">
+            <View className="flex-row justify-between items-center mb-8">
+              <View className="flex-row items-center">
+                <SvgIcon
+                  xml={IconSvg.logo_lafise}
+                  width={28}
+                  height={28}
+                  color="white"
+                />
+                <Text className="text-white text-2xl font-bold ml-2">
+                  Hola, Josué
+                </Text>
+              </View>
+              <Image
+                source={require("../../assets/images/profile_placeholder.png")}
+                className="w-12 h-12 rounded-full"
               />
-              <Text className="text-white text-2xl font-bold ml-2">
-                Hola, Josué
-              </Text>
             </View>
-            <Image
-              source={require("../../assets/images/profile_placeholder.png")} // Asegúrate de tener esta imagen
-              className="w-10 h-10 rounded-full"
-            />
+            <View className="flex-row items-center">
+              <Text className="text-white text-xl font-semibold">
+                Mis productos
+              </Text>
+              <TouchableOpacity onPress={() => setIsVisible(!isVisible)}>
+                <SvgIcon
+                  xml={isVisible ? IconSvg.eye : IconSvg.eye_off}
+                  width={20}
+                  height={20}
+                  className="ml-2"
+                />
+              </TouchableOpacity>
+            </View>
           </View>
-          <View className="flex-row items-center">
-            <Text className="text-white text-xl font-semibold">
-              Mis productos
-            </Text>
-            <Feather name="settings" size={20} color="white" className="ml-2" />
-          </View>
-        </View>
+        </ImageBackground>
 
-        <View className="bg-surface -mt-8 pt-8 px-5 rounded-t-3xl min-h-[500px]">
+        <View className="bg-surface pt-8 px-5  min-h-[500px]">
           <AccountBalanceCard
             accountType="Cuenta de ahorro"
             accountNumber="1134948394"
-            balance="NIO 7,500.00"
-            onPressSend={() => console.log('Enviar')}
-            className="mb-6"
+            balance={isVisible ? "NIO *****" : "NIO 7,500.00"}
+            onPressSend={() => console.log("Enviar")}
+            className="mt-[-150px] mb-6"
           />
-          <Text className="text-text text-xl font-semibold mb-4">
-            Operaciones rápidas
-          </Text>
-          <View className="flex-row justify-around mb-6 bg-white p-3 rounded-xl shadow-md">
-            <QuickActionItem
-              iconName="bank-transfer-out"
-              label="Transferir Dinero"
-              onPress={() => router.push("/(transfer)")}
-            />
-            <QuickActionItem
-              iconName="lightbulb-on-outline"
-              label="Pagar Servicio"
-            />
-            <QuickActionItem
-              iconName="cellphone-arrow-down"
-              label="Recargar celular"
-            />
-            <QuickActionItem
-              iconName="credit-card-off-outline"
-              label="Retiro sin tarjeta"
-            />
+
+          <View className="flex mb-6 bg-white p-3 rounded-xl shadow-md">
+            <Text className="text-text text-xl font-semibold mb-4">
+              Operaciones rápidas
+            </Text>
+            <View className="flex-row justify-round">
+              <QuickActionItem
+                iconName={IconSvg.transaction}
+                label="Transferir Dinero"
+                onPress={() => router.push("/(transfer)")}
+                iconContainerClassName="bg-[#E6F3F0] p-4 rounded-xl mb-2"
+              />
+              <QuickActionItem
+                iconName={IconSvg.payment_services}
+                label="Pagar Servicio"
+                iconContainerClassName="bg-[#FFF3E9] p-4 rounded-xl mb-2"
+              />
+              <QuickActionItem
+                iconName={IconSvg.phone_recharge}
+                label="Recargar celular"
+                iconContainerClassName="bg-[#E6F7FD] p-4 rounded-xl mb-2"
+              />
+              <QuickActionItem
+                iconName={IconSvg.whithdrawal}
+                label="Retiro sin tarjeta"
+                iconContainerClassName="bg-[#EAE6F3] p-4 rounded-xl mb-2"
+              />
+            </View>
           </View>
           <ScheduledPayment
             title="Paga quincenal"
             subtitle="Banco"
             amount="C$7,500.00"
-            onPress={() => console.log('Detalle pago')}
+            onPress={() => console.log("Detalle pago")}
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }

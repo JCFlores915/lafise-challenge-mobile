@@ -1,17 +1,12 @@
 // components/home/QuickActionItem.tsx
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons"; 
 import Icon from "../common/Icon"; 
+import SvgIcon from '@/components/common/SvgIcon';
 
 interface QuickActionItemProps {
-  iconName: any; 
-  iconFamily?:
-    | "MaterialCommunityIcons"
-    | "Ionicons"
-    | "Feather"
-    | "FontAwesome"
-    | "AntDesign";
+  iconName: string; 
+  iconFamily?: string;
   label: string;
   onPress?: () => void;
   className?: string; 
@@ -21,12 +16,12 @@ interface QuickActionItemProps {
 
 const QuickActionItem: React.FC<QuickActionItemProps> = ({
   iconName,
-  iconFamily = "MaterialCommunityIcons",
+  iconFamily,
   label,
   onPress,
   className = "items-center flex-1 p-2",
-  iconContainerClassName = "bg-primary/10 p-4 rounded-full mb-2",
-  labelClassName = "text-text text-xs text-center",
+  iconContainerClassName,
+  labelClassName = "text-text text-center",
 }) => {
   return (
     <TouchableOpacity
@@ -35,7 +30,10 @@ const QuickActionItem: React.FC<QuickActionItemProps> = ({
       activeOpacity={0.7}
     >
       <View className={iconContainerClassName}>
-        <Icon name={iconName} family={iconFamily} size={28} color="#006A4E" />
+        <SvgIcon 
+          xml={iconName}
+          
+        />
       </View>
       <Text className={labelClassName}>{label}</Text>
     </TouchableOpacity>

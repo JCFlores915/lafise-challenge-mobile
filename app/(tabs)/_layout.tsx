@@ -2,6 +2,8 @@
 import React from "react";
 import { Tabs } from "expo-router";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons"; 
+import SvgIcon from "@/components/common/SvgIcon";
+import { IconSvg } from "@/assets/images/svg";
 
 export default function TabLayout() {
   return (
@@ -9,6 +11,10 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: "#006A4E", 
         tabBarInactiveTintColor: "#6B7280",
+        tabBarLabelStyle: {
+          fontSize: 12,
+          marginBottom: 5,
+        },
         tabBarStyle: {
         },
         headerShown: false, 
@@ -19,11 +25,12 @@ export default function TabLayout() {
         options={{
           title: "Inicio",
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="home-variant"
-              color={color}
-              size={size}
-            />
+              <SvgIcon
+                xml={IconSvg.home}
+                width={size}
+                height={size}
+                borderColor={color}
+              />
           ),
         }}
       />
@@ -32,10 +39,11 @@ export default function TabLayout() {
         options={{
           title: "Operaciones",
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="swap-horizontal-bold"
-              color={color}
-              size={size}
+            <SvgIcon
+              xml={IconSvg.operations}
+              width={size}
+              height={size}
+              borderColor={color}
             />
           ),
         }}
@@ -45,10 +53,11 @@ export default function TabLayout() {
         options={{
           title: "Productos",
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="credit-card-outline"
-              color={color}
-              size={size}
+            <SvgIcon
+              xml={IconSvg.products}
+              width={size}
+              height={size}
+              borderColor={color}
             />
           ),
         }}

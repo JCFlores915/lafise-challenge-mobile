@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#006A4E", // Un verde similar al de la app
+        primary: "#018765", // Un verde similar al de la app
         "primary-dark": "#004D38",
         accent: "#10B981", // Un verde más claro
         background: "#FFFFFF",
