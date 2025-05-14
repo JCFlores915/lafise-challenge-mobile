@@ -17,6 +17,7 @@ import { StatusBar } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { useAccountStore } from "@/stores/accounts.store";
 import { useUserStore } from "@/stores/user.store";
+import { useTransactionsStore } from "@/stores/transacctions.store";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -34,6 +35,14 @@ export default function HomeScreen() {
     error: userError,
     fetchUser,
   } = useUserStore();
+
+  const {
+    transactions,
+    loading: transactionsLoading,
+    error: transactionsError,
+    fetchTransactions,
+  } = useTransactionsStore();
+
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBarStyle("light-content");
@@ -45,6 +54,7 @@ export default function HomeScreen() {
   useEffect(() => {
     fetchAccounts();
     fetchUser();
+    fetchTransactions(Number(user.products[0].id));
   }, []);
 
   return (
@@ -135,12 +145,23 @@ export default function HomeScreen() {
               />
             </View>
           </View>
-          <ScheduledPayment
-            title="Paga quincenal"
-            subtitle="Banco"
-            amount="C$7,500.00"
-            onPress={() => console.log("Detalle pago")}
-          />
+          {transactions.items.length > 0 ? (
+            transactions.items.map((transaction, index) => (
+              <ScheduledPayment
+                key={index}
+                title={transaction.description}
+                subtitle={transaction.bank_description}
+                transactionType={transaction.transaction_type}
+                amount={isVisible ? "*****" : transaction.amount.value}
+              />
+            ))
+          ) : (
+            <View className="flex items-center justify-center h-32">
+              <Text className="text-text text-lg font-open-sans-semibold">
+                No hay transacciones recientes
+              </Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>

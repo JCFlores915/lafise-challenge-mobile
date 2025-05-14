@@ -37,7 +37,6 @@ export const useUserStore = create<UserStore>((set, get) => ({
 
     try {
       const response = await getUserId(1);
-      console.log("Response ✅", JSON.stringify(response.data, null, 2));
       set({ user: response.data, fetched: true });
     } catch (error: any) {
       set({ error: error.message || "Error fetching user" });

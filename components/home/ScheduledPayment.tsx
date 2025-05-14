@@ -3,11 +3,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Icon from "../common/Icon";
 import SvgIcon from "../common/SvgIcon";
 import { IconSvg } from "@/assets/images/svg";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 interface ScheduledPaymentProps {
   title: string;
   subtitle: string;
-  amount: string;
+  amount: string | number;
+  transactionType?: string;
   iconName?: any;
   iconFamily?:
     | "MaterialCommunityIcons"
@@ -23,6 +25,7 @@ const ScheduledPayment: React.FC<ScheduledPaymentProps> = ({
   title,
   subtitle,
   amount,
+  transactionType,
   iconName = "arrow-down-thin-circle-outline",
   iconFamily = "MaterialCommunityIcons",
   onPress,
@@ -41,7 +44,14 @@ const ScheduledPayment: React.FC<ScheduledPaymentProps> = ({
           <Text className="text-text-secondary text-sm">{subtitle}</Text>
         </View>
       </View>
-      <Text className="text-primary font-bold text-base">{amount}</Text>
+      <Text
+        className={`${
+          transactionType === "Credit" ? "text-primary" : "text-error"
+        }  
+      font-bold text-base`}
+      >
+        {formatCurrency(amount)}
+      </Text>
     </View>
   );
 
