@@ -6,6 +6,8 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
+  StatusBar,
+  Alert,
 } from "react-native";
 import { Link, useRouter } from "expo-router";
 import AccountBalanceCard from "../../components/home/AccountBalanceCard";
@@ -13,12 +15,12 @@ import QuickActionItem from "../../components/home/QuickActionItem";
 import ScheduledPayment from "../../components/home/ScheduledPayment";
 import SvgIcon from "@/components/common/SvgIcon";
 import { IconSvg } from "@/assets/images/svg";
-import { StatusBar } from "react-native";
 import { useFocusEffect } from "expo-router";
 import { useAccountStore } from "@/stores/accounts.store";
 import { useUserStore } from "@/stores/user.store";
 import { useTransactionsStore } from "@/stores/transacctions.store";
 import { QuickOperations } from "@/constants/QuickOperations";
+import * as Clipboard from "expo-clipboard";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -44,6 +46,12 @@ export default function HomeScreen() {
     fetchTransactions,
   } = useTransactionsStore();
 
+  const sharedAccountDetails = (user: any, accounts: any) => {
+    const message = `Hola👋, soy ${user.full_name} y mi número de cuenta es ${accounts.account_number}.`;
+    Clipboard.setStringAsync(message);
+    Alert.alert("Copiado", "Detalles de la cuenta copiados al portapapeles");
+  };
+
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBarStyle("light-content");
@@ -55,7 +63,7 @@ export default function HomeScreen() {
   useEffect(() => {
     fetchAccounts();
     fetchUser();
-    fetchTransactions(Number(user.products[0].id));
+    fetchTransactions();
   }, []);
 
   return (
@@ -114,7 +122,7 @@ export default function HomeScreen() {
             accountNumber={accounts.account_number || "No disponible"}
             balance={isVisible ? "*****" : accounts.balance || "No disponible"}
             currency={accounts.currency || "No disponible"}
-            onPressSend={() => console.log("Enviar")}
+            onPressSend={() => sharedAccountDetails(user, accounts)}
             className="mt-[-150px] mb-6"
           />
 

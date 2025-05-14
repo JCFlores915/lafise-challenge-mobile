@@ -29,7 +29,7 @@ export interface TransactionsStore {
   loading: boolean;
   error: string | null;
   fetched: boolean;
-  fetchTransactions: (accountId: number) => Promise<void>;
+  fetchTransactions: () => Promise<void>;
 }
 
 export const useTransactionsStore = create<TransactionsStore>((set, get) => ({
@@ -43,14 +43,14 @@ export const useTransactionsStore = create<TransactionsStore>((set, get) => ({
   loading: false,
   error: null,
   fetched: false,
-  fetchTransactions: async (accountId: number) => {
+  fetchTransactions: async () => {
     const { fetched } = get();
     if (fetched) return;
 
     set({ loading: true, error: null });
 
     try {
-      const response = await getAcountsTransactions(accountId);
+      const response = await getAcountsTransactions(1);
       set({ transactions: response.data, fetched: true });
     } catch (error: any) {
       set({ error: error.message || "Error fetching transactions" });
@@ -59,4 +59,3 @@ export const useTransactionsStore = create<TransactionsStore>((set, get) => ({
     }
   },
 }));
-
