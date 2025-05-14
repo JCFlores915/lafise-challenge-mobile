@@ -18,6 +18,7 @@ import { useFocusEffect } from "expo-router";
 import { useAccountStore } from "@/stores/accounts.store";
 import { useUserStore } from "@/stores/user.store";
 import { useTransactionsStore } from "@/stores/transacctions.store";
+import { QuickOperations } from "@/constants/QuickOperations";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -122,27 +123,15 @@ export default function HomeScreen() {
               Operaciones rápidas
             </Text>
             <View className="flex-row justify-round">
-              <QuickActionItem
-                iconName={IconSvg.transaction}
-                label="Transferir Dinero"
-                onPress={() => router.push("/(transfer)")}
-                iconContainerClassName="bg-[#E6F3F0] p-4 rounded-xl mb-2"
-              />
-              <QuickActionItem
-                iconName={IconSvg.payment_services}
-                label="Pagar Servicios"
-                iconContainerClassName="bg-[#FFF3E9] p-4 rounded-xl mb-2"
-              />
-              <QuickActionItem
-                iconName={IconSvg.phone_recharge}
-                label="Recargar celular"
-                iconContainerClassName="bg-[#E6F7FD] p-4 rounded-xl mb-2"
-              />
-              <QuickActionItem
-                iconName={IconSvg.whithdrawal}
-                label="Retiro sin tarjeta"
-                iconContainerClassName="bg-[#EAE6F3] p-4 rounded-xl mb-2"
-              />
+              {QuickOperations.map((operation, index) => (
+                <QuickActionItem
+                  key={index}
+                  iconName={operation.iconName}
+                  label={operation.label}
+                  onPress={operation.onPress}
+                  iconContainerClassName={operation.iconContainerClassName}
+                />
+              ))}
             </View>
           </View>
           {transactions.items.length > 0 ? (
