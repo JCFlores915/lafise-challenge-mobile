@@ -14,6 +14,19 @@ interface AccountBalanceCardProps {
   currency?: string;
 }
 
+const AccountBalanceNotFound = () => {
+  return (
+    <View className="bg-white p-5 rounded-xl shadow-md border-dashed border-2 border-error mt-[-150px] mb-6">
+      <Text className="text-text text-lg font-medium font-open-sans-medbold">
+        No se encontraron cuentas
+      </Text>
+      <Text className="text-text-secondary text-sm mb-5 font-open-sans-italic">
+        Por favor, verifica tu conexión a internet o intenta nuevamente más tarde.
+      </Text>
+    </View>
+  );
+}
+
 const AccountBalanceCard: React.FC<AccountBalanceCardProps> = ({
   accountType,
   accountNumber,
@@ -22,6 +35,10 @@ const AccountBalanceCard: React.FC<AccountBalanceCardProps> = ({
   className = "",
   currency,
 }) => {
+
+  if (accountNumber === "No disponible") {
+    return <AccountBalanceNotFound />;
+  }
   return (
     <View className={`bg-white p-5 rounded-xl shadow-md ${className}`}>
       <View className="flex-row justify-between items-start mb-1">
@@ -45,7 +62,7 @@ const AccountBalanceCard: React.FC<AccountBalanceCardProps> = ({
       </Text>
       <View className="flex-row items-center gap-2">
         <Text className="text-text text-sm font-open-sans-medbold">{currency}</Text>
-        <Text className="text-text text-3xl font-bold">{formatDisplayNumber(balance)}</Text>
+        <Text className="text-text text-3xl font-bold">{balance}</Text>
       </View>
     </View>
   );

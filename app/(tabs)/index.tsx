@@ -21,6 +21,8 @@ import { useUserStore } from "@/stores/user.store";
 import { useTransactionsStore } from "@/stores/transacctions.store";
 import { QuickOperations } from "@/constants/QuickOperations";
 import { sharedAccountDetails } from "@/utils/SharingAccount";
+import { formatCurrency, formatDisplayNumber } from "@/utils/formatCurrency";
+import NetworkError from "@/components/common/NetworkError";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -38,15 +40,13 @@ export default function HomeScreen() {
     error: userError,
     fetchUser,
   } = useUserStore();
-
+  console.log("error", userError);
   const {
     transactions,
     loading: transactionsLoading,
     error: transactionsError,
     fetchTransactions,
   } = useTransactionsStore();
-
-
 
   useFocusEffect(
     useCallback(() => {
@@ -62,6 +62,18 @@ export default function HomeScreen() {
     fetchTransactions();
   }, []);
 
+  let error = userError || accountsError || transactionsError;
+  if (error) {
+    return (
+      <NetworkError
+        onRetry={() => {
+          fetchAccounts();
+          fetchUser();
+          fetchTransactions();
+        }}
+      />
+    );
+  }
   return (
     <View className="flex-1 bg-transparent">
       <ScrollView
@@ -112,11 +124,15 @@ export default function HomeScreen() {
           </View>
         </ImageBackground>
 
-        <View className="bg-surface pt-8 px-5  min-h-[500px]">
+        <View className="bg-surface pt-8 px-5 min-h-[500px]">
           <AccountBalanceCard
             accountType={accounts.alias || "No disponible"}
             accountNumber={accounts.account_number || "No disponible"}
-            balance={isVisible ? "*****" : accounts.balance || "No disponible"}
+            balance={
+              isVisible
+                ? "*****"
+                : formatDisplayNumber(accounts.balance) || "No disponible"
+            }
             currency={accounts.currency || "No disponible"}
             onPressSend={() => sharedAccountDetails(user, accounts)}
             className="mt-[-150px] mb-6"
@@ -145,7 +161,9 @@ export default function HomeScreen() {
                 title={transaction.description}
                 subtitle={transaction.bank_description}
                 transactionType={transaction.transaction_type}
-                amount={isVisible ? "*****" : transaction.amount.value}
+                amount={
+                  isVisible ? "*****" : formatCurrency(transaction.amount.value)
+                }
               />
             ))
           ) : (

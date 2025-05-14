@@ -3,7 +3,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Icon from "../common/Icon";
 import SvgIcon from "../common/SvgIcon";
 import { IconSvg } from "@/assets/images/svg";
-import { formatCurrency } from "@/utils/formatCurrency";
 
 interface ScheduledPaymentProps {
   title: string;
@@ -50,7 +49,7 @@ const ScheduledPayment: React.FC<ScheduledPaymentProps> = ({
         }  
       font-bold text-base`}
       >
-        {formatCurrency(amount)}
+        {amount}
       </Text>
     </View>
   );

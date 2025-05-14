@@ -17,7 +17,7 @@ export default function TabLayout() {
           fontFamily: "Poppins_400Regular",
         },
         tabBarStyle: {
-          height: 100,
+          height: 80,
         },
         tabBarIconStyle: {
           marginTop: 5,
