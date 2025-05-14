@@ -1,5 +1,4 @@
-// app/(tabs)/_layout.tsx
-import React from "react";
+
 import { Tabs } from "expo-router";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons"; 
 import SvgIcon from "@/components/common/SvgIcon";

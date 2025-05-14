@@ -1,4 +1,3 @@
-import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import SvgIcon from "./SvgIcon";
 import { IconSvg } from "@/assets/images/svg";

@@ -1,5 +1,4 @@
-// components/common/Icon.tsx
-import React from "react";
+
 import {
   MaterialCommunityIcons,
   Ionicons,

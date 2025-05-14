@@ -1,5 +1,4 @@
-// components/common/HeaderBar.tsx
-import React from "react";
+
 import {
   View,
   Text,

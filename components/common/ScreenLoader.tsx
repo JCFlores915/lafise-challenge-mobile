@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { View, ActivityIndicator, Text } from 'react-native';
 import { IconSvg } from '@/assets/images/svg';
 import SvgIcon from './SvgIcon';

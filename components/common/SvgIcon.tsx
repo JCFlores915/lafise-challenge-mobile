@@ -1,4 +1,3 @@
-import React from 'react';
 import { SvgXml } from 'react-native-svg';
 import { StyleSheet, View, ViewStyle } from 'react-native';
 
