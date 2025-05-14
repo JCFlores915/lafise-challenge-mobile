@@ -14,6 +14,7 @@ interface AccountStore {
   error: string | null;
   fetched: boolean;
   fetchAccounts: () => Promise<void>;
+  updateBalanceAccount: (amount: number) => Promise<void>;
 }
 
 export const useAccountStore = create<AccountStore>((set, get) => ({
@@ -40,5 +41,13 @@ export const useAccountStore = create<AccountStore>((set, get) => ({
     } finally {
       set({ loading: false });
     }
+  },
+  updateBalanceAccount: async (amount: number) => {
+    set((state) => ({
+      accounts: {
+        ...state.accounts,
+        balance: state.accounts.balance - amount,
+      },
+    }));
   },
 }));

@@ -19,7 +19,7 @@ export default function ConfirmTransferScreen() {
     sourceAccount: string;
   }>();
 
-  const { postTransaction } = useTransactionsStore();
+  const { postTransaction, loading} = useTransactionsStore();
 
   const handleConfirm = async () => {
     const transaction = {
@@ -94,7 +94,7 @@ export default function ConfirmTransferScreen() {
           />
         </View>
 
-        <Button title="Confirmar el envío" onPress={handleConfirm} size="lg" />
+        <Button title="Confirmar el envío" onPress={handleConfirm} size="lg" loading={loading} />
       </View>
     </SafeAreaView>
   );

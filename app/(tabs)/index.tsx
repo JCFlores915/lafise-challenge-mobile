@@ -85,7 +85,7 @@ export default function HomeScreen() {
     <View className="flex-1 bg-transparent">
       <ScrollView
         className="flex-1"
-        scrollEnabled={false}
+        scrollEnabled={transactions.items.length > 4}
         contentContainerStyle={{ paddingBottom: 20 }}
       >
         <ImageBackground

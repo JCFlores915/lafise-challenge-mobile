@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { getAcountsTransactions, createTransaction } from "@/api/axios";
-
+import { useAccountStore } from "@/stores/accounts.store";
 interface amount {
   currency: string;
   value: number;
@@ -69,19 +69,30 @@ export const useTransactionsStore = create<TransactionsStore>((set, get) => ({
   },
   postTransaction: async (transaction: createTransactionBody) => {
     set({ loading: true, error: null });
-
+    const { updateBalanceAccount } = useAccountStore.getState();
     try {
       const response = await createTransaction(transaction);
       set((state) => ({
         transactions: {
           ...state.transactions,
-          items: [...state.transactions.items, response.data],
+          items: [
+            ...state.transactions.items,
+            {
+              ...response.data,
+              amount: {
+                currency: transaction.amount.currency,
+                value: transaction.amount.value,
+              },
+              transaction_date: new Date().toISOString(),
+            },
+          ],
         },
       }));
+      await updateBalanceAccount(transaction.amount.value);
     } catch (error: any) {
       set({ error: error.message || "Error creating transaction" });
     } finally {
       set({ loading: false });
     }
-  }
+  },
 }));
