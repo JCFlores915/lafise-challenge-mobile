@@ -23,6 +23,7 @@ export default function HomeScreen() {
     <View className="flex-1 bg-transparent">
       <ScrollView
         className="flex-1"
+        scrollEnabled={false}
         contentContainerStyle={{ paddingBottom: 20 }}
       >
         <ImageBackground
@@ -39,8 +40,8 @@ export default function HomeScreen() {
                   height={28}
                   color="white"
                 />
-                <Text className="text-white text-2xl font-bold ml-2">
-                  Hola, Josué
+                <Text className="text-white text-lg ml-2 font-open-sans-medbold">
+                  Hola Josué
                 </Text>
               </View>
               <Image
@@ -49,7 +50,7 @@ export default function HomeScreen() {
               />
             </View>
             <View className="flex-row items-center">
-              <Text className="text-white text-xl font-semibold">
+              <Text className="text-white text-xl font-open-sans-medbold">
                 Mis productos
               </Text>
               <TouchableOpacity onPress={() => setIsVisible(!isVisible)}>
@@ -68,13 +69,13 @@ export default function HomeScreen() {
           <AccountBalanceCard
             accountType="Cuenta de ahorro"
             accountNumber="1134948394"
-            balance={isVisible ? "NIO *****" : "NIO 7,500.00"}
+            balance={isVisible ? " *****" : "7,500.00"}
             onPressSend={() => console.log("Enviar")}
             className="mt-[-150px] mb-6"
           />
 
           <View className="flex mb-6 bg-white p-3 rounded-xl shadow-md">
-            <Text className="text-text text-xl font-semibold mb-4">
+            <Text className="text-text text-xl font-open-sans-semibold mb-4">
               Operaciones rápidas
             </Text>
             <View className="flex-row justify-round">

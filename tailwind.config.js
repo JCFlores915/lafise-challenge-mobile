@@ -18,8 +18,16 @@ module.exports = {
       },
       fontFamily: {
         // Define tus fuentes si las tienes en assets/fonts/
-        // 'sans': ['YourFont-Regular', 'sans-serif'],
-        // 'bold': ['YourFont-Bold', 'sans-serif'],
+        sans: ["OpenSans_400Regular"],
+        "open-sans": ["OpenSans_400Regular"],
+        "open-sans-italic": ["OpenSans_400Regular_Italic"],
+        "open-sans-medbold": ["OpenSans_500Medium"],
+        "open-sans-semibold": ["OpenSans_600SemiBold"],
+        "open-sans-bold": ["OpenSans_700Bold"],
+
+        "poppins-regular": ["Poppins_400Regular"],
+        "poppins-semibold": ["Poppins_600SemiBold"],
+        "poppins-bold": ["Poppins_700Bold"],
       },
     },
   },

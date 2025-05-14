@@ -1,12 +1,8 @@
-// components/home/QuickActionItem.tsx
-import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import Icon from "../common/Icon"; 
 import SvgIcon from '@/components/common/SvgIcon';
 
 interface QuickActionItemProps {
   iconName: string; 
-  iconFamily?: string;
   label: string;
   onPress?: () => void;
   className?: string; 
@@ -16,12 +12,11 @@ interface QuickActionItemProps {
 
 const QuickActionItem: React.FC<QuickActionItemProps> = ({
   iconName,
-  iconFamily,
   label,
   onPress,
   className = "items-center flex-1 p-2",
   iconContainerClassName,
-  labelClassName = "text-text text-center",
+  labelClassName = "text-text text-center font-poppins-regular",
 }) => {
   return (
     <TouchableOpacity
