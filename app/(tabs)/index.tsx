@@ -186,6 +186,7 @@ export default function HomeScreen() {
                 amount={
                   isVisible ? "*****" : formatCurrency(transaction.amount.value)
                 }
+                className="mb-4"
               />
             ))
           ) : (

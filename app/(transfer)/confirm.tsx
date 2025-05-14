@@ -7,6 +7,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SvgIcon from "@/components/common/SvgIcon";
 import { IconSvg } from "@/assets/images/svg";
 import InfoRow from "@/components/common/InfoRow";
+import { useTransactionsStore } from "@/stores/transacctions.store";
+import { parseCurrency } from "@/utils/formatCurrency";
 
 export default function ConfirmTransferScreen() {
   const router = useRouter();
@@ -17,25 +19,42 @@ export default function ConfirmTransferScreen() {
     sourceAccount: string;
   }>();
 
-  const handleConfirm = () => {
-    router.push({
-      pathname: "/(transfer)/success",
-      params: {
-        accountNumber: params.accountNumber,
-        displayAmount: params.displayAmount,
-        sourceAccount: params.sourceAccount,
-        date: new Date().toLocaleDateString("es-ES", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-        }),
-        time: new Date().toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-        }),
+  const { postTransaction } = useTransactionsStore();
+
+  const handleConfirm = async () => {
+    const transaction = {
+      origin: params.sourceAccount,
+      destination: params.accountNumber,
+      amount: {
+        currency: "NIO",
+        value: parseCurrency(params.amount),
       },
-    });
+    };
+
+   await postTransaction(transaction)
+      .then(() => {
+        router.push({
+          pathname: "/(transfer)/success",
+          params: {
+            accountNumber: params.accountNumber,
+            displayAmount: params.displayAmount,
+            sourceAccount: params.sourceAccount,
+            date: new Date().toLocaleDateString("es-ES", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }),
+            time: new Date().toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            }),
+          },
+        });
+      })
+      .catch((error) => {
+        console.error("Error al crear la transacción:", error);
+      });
   };
 
   useFocusEffect(

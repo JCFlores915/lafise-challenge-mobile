@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getAcountsTransactions } from "@/api/axios";
+import { getAcountsTransactions, createTransaction } from "@/api/axios";
 
 interface amount {
   currency: string;
@@ -24,12 +24,21 @@ interface transactions {
   items: transaction[];
 }
 
+interface createTransactionBody {
+  origin: string;
+  destination: string;
+  amount: {
+    currency: string;
+    value: number;
+  };
+}
 export interface TransactionsStore {
   transactions: transactions;
   loading: boolean;
   error: string | null;
   fetched: boolean;
   fetchTransactions: () => Promise<void>;
+  postTransaction: (transaction: createTransactionBody) => Promise<void>;
 }
 
 export const useTransactionsStore = create<TransactionsStore>((set, get) => ({
@@ -58,4 +67,21 @@ export const useTransactionsStore = create<TransactionsStore>((set, get) => ({
       set({ loading: false });
     }
   },
+  postTransaction: async (transaction: createTransactionBody) => {
+    set({ loading: true, error: null });
+
+    try {
+      const response = await createTransaction(transaction);
+      set((state) => ({
+        transactions: {
+          ...state.transactions,
+          items: [...state.transactions.items, response.data],
+        },
+      }));
+    } catch (error: any) {
+      set({ error: error.message || "Error creating transaction" });
+    } finally {
+      set({ loading: false });
+    }
+  }
 }));

@@ -35,8 +35,8 @@ const ScheduledPayment: React.FC<ScheduledPaymentProps> = ({
       className={`bg-white p-4 rounded-xl shadow-md flex-row items-center justify-between ${className}`}
     >
       <View className="flex-row items-center">
-        <View className="bg-accent/20 p-3 rounded-full mr-3">
-          <SvgIcon xml={IconSvg.arrow_down} />
+        <View className={`${transactionType === "Credit"? "bg-accent/20" :"bg-error/20"} p-3 rounded-full mr-4`}>
+          <SvgIcon xml={transactionType === "Credit" ? IconSvg.arrow_down : IconSvg.arrow_up} />
         </View>
         <View>
           <Text className="text-text font-bold">{title}</Text>
