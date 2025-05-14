@@ -65,7 +65,7 @@ export default function TransferScreen() {
             onIconPress={() => console.log("Edit amount")}
           />
 
-          {/* {!isFormFilled && (
+          {!isFormFilled && (
             <TouchableOpacity
               onPress={fillExampleData}
               className="my-2 p-2 bg-accent/20 rounded-md"
@@ -74,7 +74,7 @@ export default function TransferScreen() {
                 Simular datos (para demo)
               </Text>
             </TouchableOpacity>
-          )} */}
+          )}
         </View>
 
         <Button

@@ -4,14 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import Button from '../../components/common/Button';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-
-const InfoRow = ({ label, value }: { label: string; value: string }) => (
-  <View className="py-4 border-b border-border">
-    <Text className="text-text-secondary text-sm mb-1">{label}</Text>
-    <Text className="text-text text-base font-semibold">{value}</Text>
-  </View>
-);
+import SvgIcon from '@/components/common/SvgIcon';
+import { IconSvg } from '@/assets/images/svg';
+import InfoRow from '@/components/common/InfoRow';
 
 export default function ConfirmTransferScreen() {
   const router = useRouter();
@@ -31,22 +26,27 @@ export default function ConfirmTransferScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-surface">
+    <SafeAreaView className="flex-1 bg-white">
       <View className="flex-1 p-5 justify-between">
         <View>
           <View className="items-center my-8">
-            <View className="bg-accent/20 p-6 rounded-full mb-4">
-              <MaterialCommunityIcons name="cellphone-check" size={48} color="#006A4E" />
+            <View className="bg-[#E6F7FD] p-8 rounded-full mb-4">
+              <SvgIcon
+                xml={IconSvg.phone_recharge}
+                width={40}
+                height={40}
+                borderColor='#0079A8'
+              />
             </View>
-            <Text className="text-text-secondary text-sm">Total a enviar</Text>
-            <Text className="text-text text-4xl font-bold mt-1">{params.displayAmount || 'C$0.00'}</Text>
+            <Text className="text-text-secondary text-lg">Total a enviar</Text>
+            <Text className="text-text text-5xl font-bold mt-1">{params.displayAmount || 'C$0.00'}</Text>
           </View>
 
           <InfoRow label="Al número de cuenta" value={params.accountNumber || 'N/A'} />
           <InfoRow label="Cuenta a utilizar para el envío" value={params.sourceAccount || 'N/A'} />
         </View>
 
-        <Button title="Confirmar el envío" onPress={handleConfirm} />
+        <Button title="Confirmar el envío" onPress={handleConfirm} size='lg'/>
       </View>
     </SafeAreaView>
   );
