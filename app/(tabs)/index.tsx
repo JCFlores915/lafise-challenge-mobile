@@ -86,7 +86,7 @@ export default function HomeScreen() {
               />
               <QuickActionItem
                 iconName={IconSvg.payment_services}
-                label="Pagar Servicio"
+                label="Pagar Servicios"
                 iconContainerClassName="bg-[#FFF3E9] p-4 rounded-xl mb-2"
               />
               <QuickActionItem

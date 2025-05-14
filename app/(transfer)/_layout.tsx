@@ -3,6 +3,8 @@ import React from 'react';
 import { Stack, useRouter } from 'expo-router';
 import { TouchableOpacity, Platform } from 'react-native'; // Platform para ajustes de UI
 import { Ionicons } from '@expo/vector-icons';
+import SvgIcon from '@/components/common/SvgIcon';
+import { IconSvg } from '@/assets/images/svg';
 // No necesitas 'styled' de nativewind aquí para los componentes básicos de la cabecera.
 
 export default function TransferLayout() {
@@ -12,15 +14,15 @@ export default function TransferLayout() {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: 'white', // Color de fondo de la cabecera
+          backgroundColor: 'white', 
         },
-        headerTintColor: '#1F2937', // Color del título y del botón de retroceso (texto oscuro)
+        headerTintColor: '#1F2937', 
         headerTitleStyle: {
-          fontWeight: '600', // 'bold' puede ser muy grueso, '600' (semibold) es común
-          fontSize: 17,      // Tamaño de fuente típico para títulos de cabecera iOS
+          fontWeight: '600', 
+          fontSize: 17,     
         },
-        headerTitleAlign: 'center', // Centra el título como en las imágenes de ejemplo
-        headerShadowVisible: true,  // Muestra una sombra sutil debajo de la cabecera
+        headerTitleAlign: 'center', 
+        headerShadowVisible: false, 
 
         headerLeft: () => (
           <TouchableOpacity
@@ -30,7 +32,12 @@ export default function TransferLayout() {
               padding: 8, 
             }}
           >
-            <Ionicons name="arrow-back" size={24} color="#1F2937" />
+            <SvgIcon
+              xml={IconSvg.chevron_right}
+              width={22}
+              height={22}
+            />
+
           </TouchableOpacity>
         ),
       }}

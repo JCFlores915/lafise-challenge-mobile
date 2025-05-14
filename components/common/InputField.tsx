@@ -1,99 +1,51 @@
-// components/common/InputField.tsx
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  TextInputProps,
-  ViewStyle,
-} from "react-native";
-import { Feather, Ionicons } from "@expo/vector-icons"; // O tu librería de iconos preferida
+import { TextInput, View, Text, TouchableOpacity } from "react-native";
 import { cssInterop } from "react-native-css-interop";
+import { Feather } from "@expo/vector-icons";
+import SvgIcon from "./SvgIcon";
+import { IconSvg } from "@/assets/images/svg";
 
-// Asegura que TextInput pueda ser estilizado con className
 cssInterop(TextInput, { className: "style" });
 
-interface InputFieldProps extends TextInputProps {
-  label?: string;
-  containerClassName?: string;
-  inputClassName?: string;
-  labelClassName?: string;
-  error?: string;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
-  secureTextEntryToggle?: boolean;
-}
-
-const InputField: React.FC<InputFieldProps> = ({
+const InputField = ({
   label,
-  containerClassName = "",
-  inputClassName = "",
-  labelClassName = "",
-  error,
-  leftIcon,
-  rightIcon,
-  secureTextEntry: initialSecureTextEntry,
-  secureTextEntryToggle,
-  ...textInputProps
-}) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [secureTextEntry, setSecureTextEntry] = useState(
-    initialSecureTextEntry
-  );
-
-  const baseInputContainerClasses =
-    "flex-row items-center bg-white border rounded-lg shadow-sm px-3.5";
-  const focusClasses = "border-primary ring-1 ring-primary";
-  const errorClasses = "border-error ring-1 ring-error";
-  const defaultBorderClass = "border-border";
-
-  let currentBorderClass = defaultBorderClass;
-  if (error) {
-    currentBorderClass = errorClasses;
-  } else if (isFocused) {
-    currentBorderClass = focusClasses;
-  }
-
-  const toggleSecureEntry = () => {
-    setSecureTextEntry(!secureTextEntry);
-  };
-
-  return (
-    <View className={`mb-4 ${containerClassName}`}>
-      {label && (
-        <Text className={`text-sm text-text-secondary mb-1 ${labelClassName}`}>
-          {label}
-        </Text>
+  placeholder,
+  value,
+  onChangeText,
+  keyboardType = "default",
+  icon,
+  onIconPress,
+}: {
+  label: string;
+  placeholder: string;
+  value: string;
+  onChangeText: (text: string) => void;
+  keyboardType?: any;
+  icon?: any;
+  onIconPress?: () => void;
+}) => (
+  <View className="mb-6">
+    <Text className="text-[#181B25] text-lg mb-1 font-semibold">{label}</Text>
+    <View className="flex-row items-center bg-white p-4 rounded-lg border border-[#CACFD8] shadow-sm">
+      <TextInput
+        className="flex-1 text-[#181B25] text-base font-semibold text-"
+        placeholder={placeholder}
+        placeholderTextColor="#717784"
+        value={value}
+        onChangeText={onChangeText}
+        keyboardType={keyboardType}
+      />
+      {icon && onIconPress && (
+        <TouchableOpacity onPress={onIconPress} className="p-1">
+          <SvgIcon
+            xml={IconSvg.edit_pencil}
+            width={24}
+            height={24}
+            // className="text-[#181B25]"
+          />
+        </TouchableOpacity>
       )}
-      <View
-        className={`${baseInputContainerClasses} ${currentBorderClass} h-12`}
-      >
-        {leftIcon && <View className="mr-2.5">{leftIcon}</View>}
-        <TextInput
-          className={`flex-1 text-base text-text placeholder:text-gray-400 ${inputClassName}`}
-          placeholderTextColor="#9CA3AF"
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          secureTextEntry={secureTextEntry}
-          {...textInputProps}
-        />
-        {secureTextEntryToggle && (
-          <TouchableOpacity onPress={toggleSecureEntry} className="p-2">
-            <Ionicons
-              name={secureTextEntry ? "eye-off-outline" : "eye-outline"}
-              size={20}
-              color="#6B7280"
-            />
-          </TouchableOpacity>
-        )}
-        {rightIcon && !secureTextEntryToggle && (
-          <View className="ml-2.5">{rightIcon}</View>
-        )}
-      </View>
-      {error && <Text className="text-xs text-error mt-1">{error}</Text>}
     </View>
-  );
-};
+  </View>
+);
 
 export default InputField;
