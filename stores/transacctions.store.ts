@@ -51,7 +51,6 @@ export const useTransactionsStore = create<TransactionsStore>((set, get) => ({
 
     try {
       const response = await getAcountsTransactions(accountId);
-      console.log("response", response.data);
       set({ transactions: response.data, fetched: true });
     } catch (error: any) {
       set({ error: error.message || "Error fetching transactions" });

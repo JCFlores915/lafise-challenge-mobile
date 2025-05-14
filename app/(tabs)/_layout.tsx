@@ -13,9 +13,14 @@ export default function TabLayout() {
         tabBarInactiveTintColor: "#6B7280",
         tabBarLabelStyle: {
           fontSize: 12,
-          marginBottom: 5,
+          marginTop: 5,
+          fontFamily: "Poppins_400Regular",
         },
         tabBarStyle: {
+          height: 100,
+        },
+        tabBarIconStyle: {
+          marginTop: 5,
         },
         headerShown: false, 
       }}
