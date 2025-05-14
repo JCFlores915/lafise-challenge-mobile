@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import Button from '../../components/common/Button';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const SummaryRow = ({ label, value }: { label: string; value: string }) => (
-  <View className="flex-row justify-between py-3">
-    <Text className="text-text-secondary text-sm">{label}</Text>
-    <Text className="text-text text-sm font-semibold">{value}</Text>
+  <View className="flex-col text-center py-3">
+    <Text className="text-text-secondary text-sm font-semibold text-center">{label}</Text>
+    <Text className="text-text text-base font-normal text-center">{value}</Text>
   </View>
 );
 
@@ -28,14 +28,20 @@ export default function TransferSuccessScreen() {
       <View className="flex-1 p-5 justify-between items-center">
         <View className="w-full items-center">
           <View className="mt-16 mb-8 items-center">
-            <MaterialCommunityIcons name="check-circle" size={80} color="#10B981" />
+            <View className="w-full items-center">
+            <Image 
+              source={require('@/assets/images/success.png')}
+              className="mt-[-150px] mb-4  "
+              resizeMode='contain'
+            />
+            </View>
             <Text className="text-text text-2xl font-bold mt-4">Envío con éxito</Text>
             <Text className="text-text-secondary text-sm mt-1">
               {currentDate}, {currentTime}
             </Text>
           </View>
 
-          <View className="bg-surface p-5 rounded-xl w-full shadow">
+          <View className="bg-white p-5 rounded-xl w-full">
             <Text className="text-text text-lg font-semibold mb-3 text-center">
               Resumen de tu envío
             </Text>
@@ -46,7 +52,7 @@ export default function TransferSuccessScreen() {
         </View>
 
         <View className="w-full">
-          <Button title="Volver al inicio" onPress={handleGoHome} />
+          <Button title="Volver al inicio" onPress={handleGoHome} size='lg' />
         </View>
       </View>
     </SafeAreaView>

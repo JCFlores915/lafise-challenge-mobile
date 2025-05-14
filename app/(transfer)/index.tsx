@@ -81,7 +81,7 @@ export default function TransferScreen() {
           title="Enviar"
           onPress={handleSend}
           disabled={!isFormFilled}
-          className={!isFormFilled ? "bg-gray-300" : "bg-primary"}
+          className={!isFormFilled ? "bg-gray-300" : "bg-gray-300"}
           size="lg"
         />
 

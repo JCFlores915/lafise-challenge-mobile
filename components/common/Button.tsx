@@ -88,8 +88,8 @@ const Button: React.FC<ButtonProps> = ({
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled || loading}
-      className={`${baseStyle} ${sizeClasses} ${variantClasses} ${
-        disabled || loading ? disabledStyle : ""
+      className={`${baseStyle} ${sizeClasses} ${
+        disabled ? disabledStyle : variantClasses
       } ${className}`}
       activeOpacity={0.8}
     >
