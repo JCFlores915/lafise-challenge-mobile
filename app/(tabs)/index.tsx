@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,18 +7,46 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
 import AccountBalanceCard from "../../components/home/AccountBalanceCard";
 import QuickActionItem from "../../components/home/QuickActionItem";
 import ScheduledPayment from "../../components/home/ScheduledPayment";
 import SvgIcon from "@/components/common/SvgIcon";
 import { IconSvg } from "@/assets/images/svg";
+import { StatusBar } from "react-native";
+import { useFocusEffect } from "expo-router";
+import { useAccountStore } from "@/stores/accounts.store";
+import { useUserStore } from "@/stores/user.store";
 
 export default function HomeScreen() {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
+  const {
+    accounts,
+    loading: accountsLoading,
+    error: accountsError,
+    fetchAccounts,
+  } = useAccountStore();
+
+  const {
+    user,
+    loading: userLoading,
+    error: userError,
+    fetchUser,
+  } = useUserStore();
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle("light-content");
+      StatusBar.setBackgroundColor("transparent");
+      StatusBar.setTranslucent(true);
+    }, [])
+  );
+
+  useEffect(() => {
+    fetchAccounts();
+    fetchUser();
+  }, []);
+
   return (
     <View className="flex-1 bg-transparent">
       <ScrollView
@@ -41,11 +69,15 @@ export default function HomeScreen() {
                   color="white"
                 />
                 <Text className="text-white text-lg ml-2 font-open-sans-medbold">
-                  Hola Josué
+                  {`Hola, ${user.full_name.split(" ")[0]}`}
                 </Text>
               </View>
               <Image
-                source={require("../../assets/images/profile_placeholder.png")}
+                source={
+                  user.profile_photo
+                    ? { uri: user.profile_photo }
+                    : require("../../assets/images/profile_placeholder.png")
+                }
                 className="w-12 h-12 rounded-full"
               />
             </View>
@@ -67,9 +99,10 @@ export default function HomeScreen() {
 
         <View className="bg-surface pt-8 px-5  min-h-[500px]">
           <AccountBalanceCard
-            accountType="Cuenta de ahorro"
-            accountNumber="1134948394"
-            balance={isVisible ? " *****" : "7,500.00"}
+            accountType={accounts.alias || "No disponible"}
+            accountNumber={accounts.account_number || "No disponible"}
+            balance={isVisible ? "*****" : accounts.balance || "No disponible"}
+            currency={accounts.currency || "No disponible"}
             onPressSend={() => console.log("Enviar")}
             className="mt-[-150px] mb-6"
           />

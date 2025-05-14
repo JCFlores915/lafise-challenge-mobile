@@ -1,4 +1,3 @@
-// utils/formatCurrency.ts
 
 /**
  * Formatea un número o string numérico como moneda con símbolo y separadores.

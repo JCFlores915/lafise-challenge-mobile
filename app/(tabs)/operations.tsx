@@ -1,11 +1,20 @@
-import React from 'react';
+import {useCallback} from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from "react-native";
+import { useFocusEffect } from "expo-router";
 
 export default function OperationsScreen() {
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle("dark-content");
+      StatusBar.setBackgroundColor("#ffffff");
+      StatusBar.setTranslucent(false);
+    }, [])
+  );
   return (
     <SafeAreaView className="flex-1 bg-surface">
-
 
       <ScrollView contentContainerStyle={{ padding: 20 }}>
         <Text className="text-2xl font-bold text-text mb-6 text-center">

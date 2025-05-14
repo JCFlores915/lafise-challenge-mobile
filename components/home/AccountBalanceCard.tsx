@@ -3,13 +3,15 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SvgIcon from "../common/SvgIcon";
 import { IconSvg } from "@/assets/images/svg";
+import { formatDisplayNumber } from "@/utils/formatCurrency";
 
 interface AccountBalanceCardProps {
   accountType: string;
-  accountNumber: string;
-  balance: string;
+  accountNumber: number | string;
+  balance: string | number;
   onPressSend?: () => void;
   className?: string;
+  currency?: string;
 }
 
 const AccountBalanceCard: React.FC<AccountBalanceCardProps> = ({
@@ -18,6 +20,7 @@ const AccountBalanceCard: React.FC<AccountBalanceCardProps> = ({
   balance,
   onPressSend,
   className = "",
+  currency,
 }) => {
   return (
     <View className={`bg-white p-5 rounded-xl shadow-md ${className}`}>
@@ -41,8 +44,8 @@ const AccountBalanceCard: React.FC<AccountBalanceCardProps> = ({
         Saldo disponible
       </Text>
       <View className="flex-row items-center gap-2">
-        <Text className="text-text text-sm font-open-sans-medbold">NIO</Text>
-        <Text className="text-text text-3xl font-bold">{balance}</Text>
+        <Text className="text-text text-sm font-open-sans-medbold">{currency}</Text>
+        <Text className="text-text text-3xl font-bold">{formatDisplayNumber(balance)}</Text>
       </View>
     </View>
   );

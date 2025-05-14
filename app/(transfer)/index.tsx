@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import Button from "../../components/common/Button";
 import InputField from "../../components/common/InputField";
-
+import { formatCurrency } from "@/utils/formatCurrency";
 export default function TransferScreen() {
   const router = useRouter();
   const [accountNumber, setAccountNumber] = useState("");
@@ -22,10 +22,7 @@ export default function TransferScreen() {
         params: {
           accountNumber: filledAccountNumber,
           amount: filledAmount,
-          displayAmount: `C$${filledAmount.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ","
-          )}`,
+          displayAmount: formatCurrency(filledAmount),
           sourceAccount: "0234567645",
         },
       });
