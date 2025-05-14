@@ -20,7 +20,7 @@ import { useAccountStore } from "@/stores/accounts.store";
 import { useUserStore } from "@/stores/user.store";
 import { useTransactionsStore } from "@/stores/transacctions.store";
 import { QuickOperations } from "@/constants/QuickOperations";
-import * as Clipboard from "expo-clipboard";
+import { sharedAccountDetails } from "@/utils/SharingAccount";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -46,11 +46,7 @@ export default function HomeScreen() {
     fetchTransactions,
   } = useTransactionsStore();
 
-  const sharedAccountDetails = (user: any, accounts: any) => {
-    const message = `Hola👋, soy ${user.full_name} y mi número de cuenta es ${accounts.account_number}.`;
-    Clipboard.setStringAsync(message);
-    Alert.alert("Copiado", "Detalles de la cuenta copiados al portapapeles");
-  };
+
 
   useFocusEffect(
     useCallback(() => {
