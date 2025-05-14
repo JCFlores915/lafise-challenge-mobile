@@ -1,29 +1,50 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import Button from '../../components/common/Button';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import SvgIcon from '@/components/common/SvgIcon';
-import { IconSvg } from '@/assets/images/svg';
-import InfoRow from '@/components/common/InfoRow';
+import { useCallback } from "react";
+import { View, Text, StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useLocalSearchParams, useRouter, useFocusEffect } from "expo-router";
+import Button from "../../components/common/Button";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import SvgIcon from "@/components/common/SvgIcon";
+import { IconSvg } from "@/assets/images/svg";
+import InfoRow from "@/components/common/InfoRow";
 
 export default function ConfirmTransferScreen() {
   const router = useRouter();
-  const params = useLocalSearchParams<{ accountNumber: string, amount: string, displayAmount: string, sourceAccount: string }>();
+  const params = useLocalSearchParams<{
+    accountNumber: string;
+    amount: string;
+    displayAmount: string;
+    sourceAccount: string;
+  }>();
 
   const handleConfirm = () => {
     router.push({
-        pathname: '/(transfer)/success',
-        params: {
-            accountNumber: params.accountNumber,
-            displayAmount: params.displayAmount,
-            sourceAccount: params.sourceAccount,
-            date: new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric'}),
-            time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })
-        }
+      pathname: "/(transfer)/success",
+      params: {
+        accountNumber: params.accountNumber,
+        displayAmount: params.displayAmount,
+        sourceAccount: params.sourceAccount,
+        date: new Date().toLocaleDateString("es-ES", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        }),
+        time: new Date().toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        }),
+      },
     });
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle("dark-content");
+      StatusBar.setBackgroundColor("#ffffff");
+      StatusBar.setTranslucent(false);
+    }, [])
+  );
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -35,18 +56,26 @@ export default function ConfirmTransferScreen() {
                 xml={IconSvg.phone_recharge}
                 width={40}
                 height={40}
-                borderColor='#0079A8'
+                borderColor="#0079A8"
               />
             </View>
             <Text className="text-text-secondary text-lg">Total a enviar</Text>
-            <Text className="text-text text-5xl font-bold mt-1">{params.displayAmount || 'C$0.00'}</Text>
+            <Text className="text-text text-5xl font-bold mt-1">
+              {params.displayAmount || "C$0.00"}
+            </Text>
           </View>
 
-          <InfoRow label="Al número de cuenta" value={params.accountNumber || 'N/A'} />
-          <InfoRow label="Cuenta a utilizar para el envío" value={params.sourceAccount || 'N/A'} />
+          <InfoRow
+            label="Al número de cuenta"
+            value={params.accountNumber || "N/A"}
+          />
+          <InfoRow
+            label="Cuenta a utilizar para el envío"
+            value={params.sourceAccount || "N/A"}
+          />
         </View>
 
-        <Button title="Confirmar el envío" onPress={handleConfirm} size='lg'/>
+        <Button title="Confirmar el envío" onPress={handleConfirm} size="lg" />
       </View>
     </SafeAreaView>
   );

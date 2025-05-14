@@ -1,10 +1,17 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { useCallback, useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
+import { useRouter, useFocusEffect } from "expo-router";
 import Button from "../../components/common/Button";
 import InputField from "../../components/common/InputField";
 import { formatCurrency } from "@/utils/formatCurrency";
+
 export default function TransferScreen() {
   const router = useRouter();
   const [accountNumber, setAccountNumber] = useState("");
@@ -33,6 +40,14 @@ export default function TransferScreen() {
     setAccountNumber("130492890");
     setAmount("1000");
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle("dark-content");
+      StatusBar.setBackgroundColor("#ffffff");
+      StatusBar.setTranslucent(false);
+    }, [])
+  );
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -81,8 +96,6 @@ export default function TransferScreen() {
           className={!isFormFilled ? "bg-gray-300" : "bg-gray-300"}
           size="lg"
         />
-
-
       </View>
     </SafeAreaView>
   );
